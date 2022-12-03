@@ -49,7 +49,7 @@ config :phoenix, :json_library, Jason
 
 # Discord bot config:
 config :nostrum,
-  token: "MTA0MzI3NDgyMzA2Mjc5MDE3NQ.G-x6Q3.-YUPA5b7-wSHmrAWeBTEPYqco1y6dihKcD_4eA",
+  token: System.get_env("NOSTRUM_TOKEN"),
   gateway_intents: [:guild_messages, :guilds, :message_content]
 
 # Import environment specific config. This must remain at the bottom

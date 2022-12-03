@@ -51,7 +51,10 @@ defmodule Knowbot.MixProject do
       {:plug_cowboy, "~> 2.5"},
       # Project Dependencies:
       {:nostrum, "~> 0.6"},
-      {:cowlib, "~> 2.11", hex: :remedy_cowlib, override: true}
+      {:cowlib, "~> 2.11", hex: :remedy_cowlib, override: true},
+      {:dotenvy, "~> 0.7.0"},
+      # {:vapor, "~> 0.10"},
+      # {:dotenv_parser, "~> 2.0"}
     ]
   end
 
