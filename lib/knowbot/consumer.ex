@@ -16,8 +16,10 @@ defmodule Knowbot.Consumer do
         Process.sleep(3000)
 
       "!ping" ->
-
         Api.create_message(msg.channel_id, "pyongyang!")
+
+      "/help" ->
+        Api.create_message(msg.channel_id, "This will show the help content.")
 
       "!raise" ->
         # This won't crash the entire Consumer.
