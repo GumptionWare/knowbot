@@ -9,13 +9,15 @@ Ultimately, KnowBot should be able to "listen in" on conversations in DockYard A
 ## MVB (Minimal Viable Bot) Functionality
 
 To make KnowBot immediately useful, the initial functionality starts with: 
-  * /H (or help or HELP) - How to use this bot
-  * /faq (or FAQ) - Get the (evolving) FAQ content - starting with links to HexDocs, and (especially) resources that are optimized for Elixir learners. This should evolve rapidly, so keep trying.
-  * /q (or /Q): Ask a question
+  * !H (or help or HELP) - How to use this bot
+  * !faq (or !FAQ) - Get the (evolving) FAQ content - starting with links to HexDocs, and (especially) resources that are optimized for Elixir learners. This should evolve rapidly, so keep trying.
+  * !q (or !Q): Ask a question
+  
+  NOTE: "!" will be ued to invoke commands in the MVB. Later releases will support "/" (slash) commands.
 
 ## Background Material about Bots/Discord Bots
-
+A growing list of advice about making the most effective bots:
   * IBM "best practices" article: https://www.ibm.com/cloud/blog/chatbot-best-practices
   * Some person's take on Discord bot best practices: https://github.com/meew0/discord-bot-best-practices
-  * (more to come ...)
+  * Nostrum docs: https://kraigie.github.io/nostrum/intro.html
 
