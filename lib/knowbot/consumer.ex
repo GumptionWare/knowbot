@@ -24,6 +24,16 @@ defmodule Knowbot.Consumer do
     # IO.inspect(msg.content, label: "handle_event")
 
     case String.downcase(msg.content) do
+      # starts_with("!q") and the rest is search_phrase ->
+        search term =
+          search_phrase
+          |> String.split
+          |> Enum.filter(fn word -> String.ends_with?(word, "?") end)
+          |> List.first
+          |> String.trim_trailing("?")
+        # search_results = search_by(search_term)
+        # Api.create_message(msg.channel_id, search_results)
+
       "!sleep" ->
         Api.create_message(msg.channel_id, "Going to sleep...")
         # This won't stop other events from being handled.
