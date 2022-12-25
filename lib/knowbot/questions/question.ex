@@ -13,6 +13,6 @@ defmodule Knowbot.Questions.Question do
   def changeset(question, attrs) do
     question
     |> cast(attrs, [:content, :asker])
-    |> validate_required([:content, :asker])
+    |> validate_required([:content]) # , :asker #... later
   end
 end

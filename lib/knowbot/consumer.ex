@@ -2,6 +2,9 @@ defmodule Knowbot.Consumer do
   use Nostrum.Consumer
 
   alias Nostrum.Api
+  alias Knowbot.Questions.Question
+  alias Knowbot.Repo
+  import String
 
   @help_content ~S"""
   **KnowBot**: Your learning assistant. Like you, I'm getting smarter every day.
@@ -21,27 +24,48 @@ defmodule Knowbot.Consumer do
 
   def handle_event({:MESSAGE_CREATE, msg, _ws_state}) do
     # IO.inspect(msg.content, label: "handle_event")
-    # cond do
-    #   ...>   2 + 2 == 5 ->
-    #   ...>     "This is never true"
-    #   ...>   2 * 2 == 3 ->
-    #   ...>     "Nor this"
-    #   ...>   true ->
-    #   ...>     "This is always true (equivalent to else)"
-    #   ...> end
-    # String.downcase(msg.content) |> case msg_content do
-    msg_content = String.downcase(msg.content)
+    msg_content = msg.content
     # case String.downcase(msg.content) do
     cond do
-      #  String.starts_with(msg_content, "!q") -> # ... the rest is search_phrase
-      #   search_term =
-      #     msg_content
-      #     |> String.split
-      #     |> Enum.filter(fn word -> String.ends_with?(word, "?") end)
-      #     |> List.first
-      #     |> String.trim_trailing("?")
-      #   # search_results = search_by(search_term)
-      #   |> Api.create_message(msg.channel_id)
+      String.starts_with?(msg_content, "!q") ->
+        Api.create_message(msg.channel_id, "DEBUG: #{msg_content}")
+        # HACK (v1): Create the question record directly here
+        # *** This should really be via API interactions *** (TO-DO)
+        question_content =
+          msg_content
+          |> String.trim_leading("!q")
+          |> String.trim_leading()
+
+          question = Question.changeset(%Question{}, %{content: question_content})
+          # IO.inspect(question)
+          # If no errors, insert the question into the DB:
+          if Enum.empty?(question.errors) do
+            Repo.insert!(question)
+            Api.create_message(msg.channel_id, "Your message has been recorded. Aloha.")
+          else
+            Api.create_message(msg.channel_id, "Whoops! We had a problem recording your question, but we are working on a solution.")
+          end
+
+          # LATER: When we search for similar questions already answered ...
+          #     msg_content = String.downcase(msg.content)
+          # ... then, something like ...
+          # ... find the part prior to the '?' is search_phrase
+          #   search_term =
+          #     msg_content
+          #     |> String.split
+          #     |> Enum.filter(fn word -> String.ends_with?(word, "?") end)
+          #     |> List.first
+          #     |> String.trim_trailing("?")
+          #   # search_results = search_by(search_term)
+          #   |> Api.create_message(msg.channel_id)
+
+      msg_content == "!h" ->
+        Api.create_message(msg.channel_id, @help_content)
+      #   user = userManager.GetCurrentUser()
+      #   Console.WriteLine("Connected to user {0}", user.Id);
+
+      msg_content == "!help" ->
+        Api.create_message(msg.channel_id, @help_content)
 
       msg_content == "!sleep" ->
         Api.create_message(msg.channel_id, "Going to sleep...")
@@ -49,21 +73,12 @@ defmodule Knowbot.Consumer do
         Process.sleep(3000)
 
       msg_content == "!ping" ->
-        Api.create_message(msg.channel_id, "Hello DY Academy! I am your KnowBot.")
-
-      # msg_content == "!h" ->
-      #   Api.create_message(msg.channel_id, @help_content)
-      #   user = userManager.GetCurrentUser()
-      #   Console.WriteLine("Connected to user {0}", user.Id);
-
-      msg_content == "!help" ->
-        Api.create_message(msg.channel_id, @help_content)
+        Api.create_message(msg.channel_id, "Hello DY Academy! I am your KnowBot, your learning assistant.")
 
       msg_content == "!raise" ->
         # This won't crash the entire Consumer.
         raise "No problems here!"
 
-      # _ -> # FOR CASE STATEMENT ONLY
       true ->
         :ignore
     end

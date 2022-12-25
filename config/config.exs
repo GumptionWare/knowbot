@@ -47,7 +47,7 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Discord bot config:
+# ORIGINAL Discord bot config:
 config :nostrum,
   token: System.get_env("NOSTRUM_TOKEN"),
   gateway_intents: [:guild_messages, :guilds, :message_content]
