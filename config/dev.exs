@@ -1,5 +1,10 @@
 import Config
 
+# Discord bot config:
+config :nostrum,
+  token: System.get_env("NOSTRUM_TOKEN"),
+  gateway_intents: [:guild_messages, :guilds, :message_content]
+
 # Configure your database
 config :knowbot, Knowbot.Repo,
   username: "postgres",
@@ -19,7 +24,7 @@ config :knowbot, Knowbot.Repo,
 config :knowbot, KnowbotWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {127, 0, 0, 1}, port: 4000],
+  http: [ip: {127, 0, 0, 1}, port: 4021],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,

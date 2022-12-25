@@ -18,6 +18,10 @@ defmodule KnowbotWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/questions", QuestionController
+    resources "/answers", AnswerController
+    resources "/tags", TagController
+    resources "/keywords", KeywordController
   end
 
   # Other scopes may use custom stacks.

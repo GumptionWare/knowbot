@@ -1,4 +1,13 @@
 import Config
+# Dotenvy:
+import Dotenvy
+
+source!([".env", System.get_env()]) # Dotenvy(?)
+
+# Discord bot config:
+config :nostrum,
+  token: System.get_env("NOSTRUM_TOKEN"),
+  gateway_intents: [:guild_messages, :guilds, :message_content]
 
 # Configure your database
 #
