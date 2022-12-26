@@ -34,3 +34,5 @@ npm-debug.log
 
 # Ignore .env files:
 *.env
+# Ignore MacOS .DS* files:
+**/.DS*
