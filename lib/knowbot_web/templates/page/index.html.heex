@@ -1,40 +1,34 @@
 <section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>Peace of mind from prototype to production</p>
+  <h1><%= gettext "Welcome to %{name}!", name: "KnowBot Admin" %></h1>
+  <p>Manage answers, FAQs and other configurations/settings.</p>
 </section>
 
 <section class="row">
   <article class="column">
-    <h2>Resources</h2>
+    <h2>Manage Content</h2>
     <ul>
       <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
+        <%= link "Answers", to: Routes.answer_path(@conn, :index) %>
       </li>
       <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
+        <%= link "Questions", to: Routes.question_path(@conn, :index) %>
       </li>
       <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.6/CHANGELOG.md">v1.6 Changelog</a>
+        FAQs (coming soon)
       </li>
     </ul>
   </article>
   <article class="column">
-    <h2>Help</h2>
+    <h2>Manage Settings</h2>
     <ul>
       <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
+        TBD
       </li>
       <li>
-        <a href="https://web.libera.chat/#elixir">#elixir on Libera Chat (IRC)</a>
+        TBD
       </li>
       <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-      <li>
-        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
-      </li>
-      <li>
-        <a href="https://discord.gg/elixir">Elixir on Discord</a>
+        TBD
       </li>
     </ul>
   </article>

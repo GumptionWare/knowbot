@@ -4,7 +4,6 @@ defmodule Knowbot.Consumer do
   alias Nostrum.Api
   alias Knowbot.Questions.Question
   alias Knowbot.Repo
-  import String
 
   @help_content ~S"""
   **KnowBot**: Your learning assistant. Like you, I'm getting smarter every day.
@@ -27,17 +26,17 @@ defmodule Knowbot.Consumer do
     msg_content = msg.content
     # case String.downcase(msg.content) do
     cond do
-      String.starts_with?(msg_content, "!q") ->
-        Api.create_message(msg.channel_id, "DEBUG: #{msg_content}")
+      String.starts_with?(String.downcase(msg_content), "!q") ->
+        # Api.create_message(msg.channel_id, "DEBUG: #{msg_content}")
         # HACK (v1): Create the question record directly here
         # *** This should really be via API interactions *** (TO-DO)
         question_content =
           msg_content
           |> String.trim_leading("!q")
+          |> String.trim_leading("!Q")
           |> String.trim_leading()
 
           question = Question.changeset(%Question{}, %{content: question_content})
-          # IO.inspect(question)
           # If no errors, insert the question into the DB:
           if Enum.empty?(question.errors) do
             Repo.insert!(question)
@@ -59,23 +58,23 @@ defmodule Knowbot.Consumer do
           #   # search_results = search_by(search_term)
           #   |> Api.create_message(msg.channel_id)
 
-      msg_content == "!h" ->
+      String.downcase(msg_content) == "!h" ->
         Api.create_message(msg.channel_id, @help_content)
       #   user = userManager.GetCurrentUser()
       #   Console.WriteLine("Connected to user {0}", user.Id);
 
-      msg_content == "!help" ->
+      String.downcase(msg_content) == "!help" ->
         Api.create_message(msg.channel_id, @help_content)
 
-      msg_content == "!sleep" ->
+      String.downcase(msg_content) == "!sleep" ->
         Api.create_message(msg.channel_id, "Going to sleep...")
         # This won't stop other events from being handled.
         Process.sleep(3000)
 
-      msg_content == "!ping" ->
+      String.downcase(msg_content) == "!ping" ->
         Api.create_message(msg.channel_id, "Hello DY Academy! I am your KnowBot, your learning assistant.")
 
-      msg_content == "!raise" ->
+      String.downcase(msg_content) == "!raise" ->
         # This won't crash the entire Consumer.
         raise "No problems here!"
 
