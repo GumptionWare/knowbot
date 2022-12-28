@@ -3,9 +3,9 @@ import Config
 # Only in tests, remove the complexity from the password hashing algorithm
 config :bcrypt_elixir, :log_rounds, 1
 # Dotenvy:
-import Dotenvy
+# import Dotenvy
 
-source!([".env", System.get_env()]) # Dotenvy(?)
+# source!([".env", System.get_env()]) # Dotenvy(?)
 
 # Discord bot config:
 config :nostrum,

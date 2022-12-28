@@ -67,8 +67,11 @@ defmodule Knowbot.Questions do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_question(%Question{} = question, attrs) do
+  def update_question(%Question{} = question, attrs, answers \\ []) do
     question
+    # Use the changeset function to update the question with the
+    # provided attributes and answers
+    |> Question.changeset(attrs, answers)
     |> Question.changeset(attrs)
     |> Repo.update()
   end
