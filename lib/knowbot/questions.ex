@@ -5,7 +5,6 @@ defmodule Knowbot.Questions do
 
   import Ecto.Query, warn: false
   alias Knowbot.Repo
-
   alias Knowbot.Questions.Question
 
   @doc """
@@ -49,6 +48,15 @@ defmodule Knowbot.Questions do
       {:error, %Ecto.Changeset{}}
 
   """
+  # def create_book(attrs \\ %{}, tags \\ []) do
+  #   # Create a new Book struct with the default values
+  #   %Book{}
+  #   # Use the changeset function to update the struct with the provided attributes and tags
+  #   |> Book.changeset(attrs, tags)
+  #   # Insert the updated struct into the repository
+  #   |> Repo.insert()
+  # end
+
   def create_question(attrs \\ %{}) do
     %Question{}
     |> Question.changeset(attrs)

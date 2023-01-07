@@ -5,7 +5,6 @@ defmodule Knowbot.Answers do
 
   import Ecto.Query, warn: false
   alias Knowbot.Repo
-
   alias Knowbot.Answers.Answer
 
   @doc """
@@ -49,9 +48,9 @@ defmodule Knowbot.Answers do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_answer(attrs \\ %{}) do
+  def create_answer(attrs \\ %{}, questions \\ []) do
     %Answer{}
-    |> Answer.changeset(attrs)
+    |> Answer.changeset(attrs, questions)
     |> Repo.insert()
   end
 
@@ -67,9 +66,9 @@ defmodule Knowbot.Answers do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_answer(%Answer{} = answer, attrs) do
+  def update_answer(%Answer{} = answer, attrs, questions \\ []) do
     answer
-    |> Answer.changeset(attrs)
+    |> Answer.changeset(attrs, questions)
     |> Repo.update()
   end
 

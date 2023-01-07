@@ -1,5 +1,5 @@
 defmodule Knowbot.Answers.Answer do
-  use Ecto.Schema
+  use Ecto.Schema # Use the Ecto.Schema module to define a schema for 'Answers' table
   import Ecto.Changeset
 
   schema "answers" do
@@ -16,7 +16,8 @@ defmodule Knowbot.Answers.Answer do
   def changeset(answer, attrs, questions \\ []) do
     answer
     |> cast(attrs, [:content, :answered_by])
-    |> put_assoc(:questions, questions)
     |> validate_required([:content, :answered_by])
+    |> put_assoc(:questions, questions)
   end
+
 end
