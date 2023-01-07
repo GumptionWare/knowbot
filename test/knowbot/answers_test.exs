@@ -7,6 +7,7 @@ defmodule Knowbot.AnswersTest do
     alias Knowbot.Answers.Answer
 
     import Knowbot.AnswersFixtures
+    import Knowbot.QuestionsFixtures
 
     @invalid_attrs %{answered_by: nil, content: nil}
 
@@ -26,6 +27,16 @@ defmodule Knowbot.AnswersTest do
       assert {:ok, %Answer{} = answer} = Answers.create_answer(valid_attrs)
       assert answer.answered_by == "some answered_by"
       assert answer.content == "some content"
+    end
+
+    test "create_answer/1 with associated question" do
+      question = question_fixture()
+      valid_attrs = %{answered_by: "some answered_by", content: "some content"}
+
+      assert {:ok, %Answer{} = answer} = Answers.create_answer(valid_attrs, [question] )
+      assert answer.answered_by == "some answered_by"
+      assert answer.content == "some content"
+      assert answer.questions == [question]
     end
 
     test "create_answer/1 with invalid data returns error changeset" do
