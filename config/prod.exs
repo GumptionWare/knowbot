@@ -1,5 +1,10 @@
 import Config
 
+# Discord bot config:
+config :nostrum,
+  token: System.get_env("NOSTRUM_TOKEN"),
+  gateway_intents: [:guild_messages, :guilds, :message_content]
+
 # For production, don't forget to configure the url host
 # to something meaningful, Phoenix uses this information
 # when generating URLs.
