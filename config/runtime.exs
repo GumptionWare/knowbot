@@ -5,10 +5,10 @@ import Dotenvy
 source!([".env", System.get_env()]) # Dotenvy
 
 # JSH Guess, re: location of this that will work:
-# # Discord bot config:
-# config :nostrum,
-#   token: System.get_env("NOSTRUM_TOKEN"),
-#   gateway_intents: [:guild_messages, :guilds, :message_content]
+# Discord bot config:
+config :nostrum,
+  token: System.get_env("NOSTRUM_TOKEN"),
+  gateway_intents: [:guild_messages, :guilds, :message_content]
 
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
