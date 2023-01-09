@@ -17,7 +17,7 @@ defmodule Knowbot.Answers do
 
   """
   def list_answers do
-    Repo.all(Answer)
+    Repo.all(Answer) |> Repo.preload(:questions)
   end
 
   @doc """
@@ -34,7 +34,7 @@ defmodule Knowbot.Answers do
       ** (Ecto.NoResultsError)
 
   """
-  def get_answer!(id), do: Repo.get!(Answer, id)
+  def get_answer!(id), do: Repo.get!(Answer, id) |> Repo.preload(:questions)
 
   @doc """
   Creates a answer.

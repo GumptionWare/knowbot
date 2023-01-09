@@ -5,7 +5,7 @@ defmodule KnowbotWeb.AnswerController do
   alias Knowbot.Answers.Answer
 
   def index(conn, _params) do
-    answers = Answers.list_answers()
+    answers = Answers.list_answers() |> Knowbot.Repo.preload([:questions])
     render(conn, "index.html", answers: answers)
   end
 
@@ -27,18 +27,18 @@ defmodule KnowbotWeb.AnswerController do
   end
 
   def show(conn, %{"id" => id}) do
-    answer = Answers.get_answer!(id)
+    answer = Answers.get_answer!(id) |> Knowbot.Repo.preload([:questions])
     render(conn, "show.html", answer: answer)
   end
 
   def edit(conn, %{"id" => id}) do
-    answer = Answers.get_answer!(id)
+    answer = Answers.get_answer!(id) |> Knowbot.Repo.preload([:questions])
     changeset = Answers.change_answer(answer)
     render(conn, "edit.html", answer: answer, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "answer" => answer_params}) do
-    answer = Answers.get_answer!(id)
+    answer = Answers.get_answer!(id) |> Knowbot.Repo.preload([:questions])
 
     case Answers.update_answer(answer, answer_params) do
       {:ok, answer} ->

@@ -1,12 +1,11 @@
 defmodule Knowbot.QuestionsTest do
   use Knowbot.DataCase
-
   alias Knowbot.Questions
 
   describe "questions" do
     alias Knowbot.Questions.Question
-
     import Knowbot.QuestionsFixtures
+    import Knowbot.AnswersFixtures
 
     @invalid_attrs %{asker: nil, content: nil}
 
@@ -26,6 +25,16 @@ defmodule Knowbot.QuestionsTest do
       assert {:ok, %Question{} = question} = Questions.create_question(valid_attrs)
       assert question.asker == "some asker"
       assert question.content == "some content"
+    end
+
+    test "create_question/2 with associated answer" do
+      answer = answer_fixture()
+      valid_attrs = %{asker: "some asker", content: "some content"}
+
+      assert {:ok, %Question{} = question} = Questions.create_question(valid_attrs, [answer] )
+      assert question.asker == "some asker"
+      assert question.content == "some content"
+      assert question.answers == [answer]
     end
 
     test "create_question/1 with invalid data returns error changeset" do
