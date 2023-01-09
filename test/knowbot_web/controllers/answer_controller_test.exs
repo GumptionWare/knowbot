@@ -7,6 +7,8 @@ defmodule KnowbotWeb.AnswerControllerTest do
   @update_attrs %{answered_by: "some updated answered_by", content: "some updated content"}
   @invalid_attrs %{answered_by: nil, content: nil}
 
+  setup :register_and_log_in_user
+
   describe "index" do
     test "lists all answers", %{conn: conn} do
       conn = get(conn, Routes.answer_path(conn, :index))

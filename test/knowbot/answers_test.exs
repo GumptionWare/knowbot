@@ -1,11 +1,9 @@
 defmodule Knowbot.AnswersTest do
   use Knowbot.DataCase
-
   alias Knowbot.Answers
 
   describe "answers" do
     alias Knowbot.Answers.Answer
-
     import Knowbot.AnswersFixtures
     import Knowbot.QuestionsFixtures
 

@@ -17,7 +17,7 @@ defmodule Knowbot.Questions do
 
   """
   def list_questions do
-    Repo.all(Question)
+    Repo.all(Question) |> Repo.preload(:answers)
   end
 
   @doc """
@@ -34,7 +34,7 @@ defmodule Knowbot.Questions do
       ** (Ecto.NoResultsError)
 
   """
-  def get_question!(id), do: Repo.get!(Question, id)
+  def get_question!(id), do: Repo.get!(Question, id) |> Repo.preload(:answers)
 
   @doc """
   Creates a question.
@@ -57,9 +57,9 @@ defmodule Knowbot.Questions do
   #   |> Repo.insert()
   # end
 
-  def create_question(attrs \\ %{}) do
+  def create_question(attrs \\ %{}, answers \\ []) do
     %Question{}
-    |> Question.changeset(attrs)
+    |> Question.changeset(attrs, answers)
     |> Repo.insert()
   end
 
