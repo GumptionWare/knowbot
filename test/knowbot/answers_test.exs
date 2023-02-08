@@ -56,6 +56,13 @@ defmodule Knowbot.AnswersTest do
       assert answer == Answers.get_answer!(answer.id)
     end
 
+    test "update answer/3 by associating with a question creates an association as expected" do
+      answer = answer_fixture()
+      question = question_fixture()
+      update_attrs = %{answered_by: "some updated answered_by", content: "some updated content"}
+      assert {:ok, %Answer{} = answer} = Answers.update_answer(answer, update_attrs, [question])
+    end
+
     test "delete_answer/1 deletes the answer" do
       answer = answer_fixture()
       assert {:ok, %Answer{}} = Answers.delete_answer(answer)

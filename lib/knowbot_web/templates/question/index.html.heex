@@ -1,18 +1,19 @@
-<h1>Listing Questions</h1>
+<h1>Questions with Answers</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Content</th>
+      <th colspan="1">Question</th>
+      <th> </th>
+      <th> </th>
       <th>Asker</th>
-
-      <th></th>
+      <th>Options</th>
     </tr>
   </thead>
   <tbody>
 <%= for question <- @questions do %>
     <tr>
-      <td><%= question.content %></td>
+      <td colspan="3"><%= question.content %></td>
       <td><%= question.asker %></td>
 
       <td>
@@ -20,6 +21,24 @@
         <span><%= link "Edit", to: Routes.question_path(@conn, :edit, question) %></span>
         <span><%= link "Delete", to: Routes.question_path(@conn, :delete, question), method: :delete, data: [confirm: "Are you sure?"] %></span>
       </td>
+    </tr>
+    <tr>
+      <th >Answer</th>
+      <% answer =  Enum.at(question.answers, 0) %>
+      <%!-- <td><%= inspect answer %></td> --%>
+      <%= if is_map(answer) do %>
+          <% content = Map.get(answer, :content, "empty") %>
+          <td colspan="3"><%= content %></td>
+        <% else %>
+          <% content = "Not Answered" %>
+          <td colspan="3"><%= content %></td>
+      <% end %>
+      <%!-- <td>Map?: <%= inspect is_map(answer) %></td> --%>
+      <%!-- <%= for answer <- Enum.at(question.answers, 0) do %>
+        <%= answer.content %>
+      <% end %>
+      <td><%= question.answers %></td> --%>
+      <%!-- <td><%= Enum.at(question.answers, 0).content %> </td> --%>
     </tr>
 <% end %>
   </tbody>
