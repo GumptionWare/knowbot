@@ -10,7 +10,7 @@ defmodule KnowbotWeb.QuestionControllerTest do
   describe "index" do
     test "lists all questions", %{conn: conn} do
       conn = get(conn, Routes.question_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Questions"
+      assert html_response(conn, 200) =~ "Questions with Answers"
     end
   end
 

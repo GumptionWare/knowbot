@@ -7,7 +7,6 @@ defmodule KnowbotWeb.QuestionController do
 
   def index(conn, _params) do
     questions = Questions.list_questions() |> Knowbot.Repo.preload([:answers])
-    IO.inspect(questions, label: "***DEBUG: questions list in questions_controller")
     render(conn, "index.html", questions: questions)
   end
 

@@ -4,6 +4,8 @@ defmodule Knowbot.Consumer do
   alias Nostrum.Api
   alias Knowbot.Questions.Question
   alias Knowbot.Repo
+  alias Nostrum.Struct.Component.ActionRow
+  alias Nostrum.Struct.Component.Button
 
   @help_content ~S"""
   **KnowBot**: Your learning assistant. Like you, I'm getting smarter every day.
@@ -17,8 +19,37 @@ defmodule Knowbot.Consumer do
       I start with the **?**. I assume the most important word has the question mark after it.
   **!faq** - show the Frequently Asked Questions (FAQs).
   """
+
   def start_link do
     Consumer.start_link(__MODULE__)
+  end
+
+  # ready event handler
+  def handle_event({:READY, ready, _ws_state}) do
+    # IO.inspect(ready)
+    # TO DO: Add the command creation logic here
+
+  end
+
+  # gateway event handler to process slash commands:
+  def handle_event({:INTERACTION_CREATE, interaction, _ws_state}) do
+    # IO.inspect(interaction)
+    invoked_command = interaction.data.name
+    IO.inspect(invoked_command)
+    # TO DO: Stop using String.to_atom here ... DANGEROUS
+    response_message = apply(__MODULE__, String.to_atom(invoked_command), [])
+    da_button = ActionRow.action_row()
+    |> ActionRow.append(Button.link_button("Best Movie Ever Made", "https://www.imdb.com/title/tt0118880/?ref=fn_al_tt_1"))
+    response = %{
+      type: 4,  # ChannelMessageWithSource
+      data: %{
+        content: response_message,
+        components: [da_button]
+        # components: [Nostrum.Struct.Component.Button.interaction_button("Answer", 42)]
+
+      }
+    }
+    Api.create_interaction_response(interaction, response)
   end
 
   def handle_event({:MESSAGE_CREATE, msg, _ws_state}) do
@@ -40,7 +71,7 @@ defmodule Knowbot.Consumer do
           # If no errors, insert the question into the DB:
           if Enum.empty?(question.errors) do
             Repo.insert!(question)
-            Api.create_message(msg.channel_id, "Your message has been recorded. Aloha.")
+            Api.create_message(msg.channel_id, "Your question has been recorded. Aloha.")
           else
             Api.create_message(msg.channel_id, "Whoops! We had a problem recording your question, but we are working on a solution.")
           end
@@ -88,4 +119,21 @@ defmodule Knowbot.Consumer do
   def handle_event(_event) do
     :noop
   end
+
+  def faq do
+    "FAQ coming REAL soon"
+  end
+
+  def question do
+    "Questions coming REAL soon"
+  end
+
+  def answer do
+    "Something TOTALLY different"
+    # Nostrum.Struct.Component.Button.interaction_button("Answer", 42)
+  end
+  def help do
+    @help_content
+  end
+
 end
